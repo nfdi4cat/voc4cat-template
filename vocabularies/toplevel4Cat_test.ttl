@@ -10,7 +10,6 @@
     dcterms:identifier "activities"^^xsd:token ;
     dcterms:provenance "AgroVoc"@en ;
     rdfs:isDefinedBy <http://aims.fao.org/aos/agrovoc/c_330834> ;
-    skos:altLabel "Aktivitäten"@en ;
     skos:definition "This contains activities that are conducted along the food supply chain, such as “breeding”, “feeding”, “surveying”, “cleaning” and “transport”. Included here are also higher-level management activities, such as “accounting” and “planning”; activities on nutritional topics, such as “weight reduction”; and activities that are more loosely related to agriculture and food or rural areas, such as “cartography”, “computer programming” and “recreation”."@en ;
     skos:inScheme cs: ;
     skos:prefLabel "Activities"@en ;
