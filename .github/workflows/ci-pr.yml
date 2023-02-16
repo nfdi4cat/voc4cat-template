@@ -10,7 +10,7 @@
 name: CI on pull request create or update
 on:
   pull_request:
-    branches: 
+    branches:
       - main
     types: [opened, edited, synchronize]
   workflow_dispatch:
@@ -21,76 +21,75 @@ env:
   PIP_DISABLE_PIP_VERSION_CHECK: "1"
 
 jobs:
-  if: ${{ github.event.pull_request.merged }}
-  vocab_build:
+  build_vocab:
+    name: Merge & build vocabulary
     # Run on all pull request types except merge which has its own workflow.
     if: ${{ !github.event.pull_request.merged }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
 
-    - name: Install dependencies
-      run: |
-        python -VV
-        python -m pip install --upgrade pip setuptools wheel
-      # python -m pip install -U git+https://${{ github.event.repository.name }}:$VOC4CAT_READ_TOKEN@gitlab.fokus.fraunhofer.de/nfdi4cat/ta1-ontologies/voc4cat-tool.git@main
-        python -m pip pip install git+https://${GITHUB_PAT}@github.com/dalito/voc4cat-tool.git@main
+      - name: Install dependencies
+        run: |
+          python -VV
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip pip install git+https://${GITHUB_PAT}@github.com/dalito/voc4cat-tool.git@main
 
-    - name: Run voc4cat
-      run: |
-        voc4cat --version
-        ls -l outbox/ || echo "outbox directory does not exist."
-        voc4cat --add_IRI --check --forward --docs --output-directory outbox inbox-excel-vocabs/ |& tee voc4cat.log || EXIT_CODE=${PIPESTATUS[0]}
-        mv voc4cat.log outbox
-        ls -l outbox/ || echo "outbox directory does not exist."
-        echo "${EXIT_CODE}"
-        if [ $EXIT_CODE -ne 0 ]; then exit ${EXIT_CODE}; fi;
-    
-    - name: Store artifacts
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v3
-      with:
-        name: voc4cat-outbox
-        path: outbox/
+      - name: Run voc4cat
+        run: |
+          voc4cat --version
+          ls -l outbox/ || echo "outbox directory does not exist."
+          voc4cat --add_IRI --check --forward --docs --output-directory outbox inbox-excel-vocabs/ |& tee voc4cat.log || EXIT_CODE=${PIPESTATUS[0]}
+          mv voc4cat.log outbox
+          ls -l outbox/ || echo "outbox directory does not exist."
+          echo "${EXIT_CODE}"
+          if [ $EXIT_CODE -ne 0 ]; then exit ${EXIT_CODE}; fi;
 
-    - name: Merge changes into vocabulary
-      run: |
-        git status
-        merge_vocab outbox/ vocabularies/
-      # git add vocabularies/\*.ttl || echo "No ttl files to add."
-      # git status
+      - name: Store artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: voc4cat-outbox
+          path: outbox/
 
-    - name: Commit vocabulary changes
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: 'CI: vocabulary update in pipeline $CI_PIPELINE_ID'
-        push: true
-        # glob pattern of files which should be added to the commit
-        file_pattern: 'vocabularies/\*.ttl'
-      run: |
-        git status
+      - name: Merge changes into vocabulary
+        run: |
+          git status
+          merge_vocab outbox/ vocabularies/
+        # git add vocabularies/\*.ttl || echo "No ttl files to add."
+        # git status
 
-    - name: Remove Excel vocabulary files from inbox
-      run: |
-        git rm inbox-excel-vocabs/\*.xlsx || echo "No xlsx files to remove."
-        git status
+      - name: Commit vocabulary changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'CI: vocabulary update in pipeline $CI_PIPELINE_ID'
+          push: true
+          # glob pattern of files which should be added to the commit
+          file_pattern: 'vocabularies/\*.ttl'
+        run: |
+          git status
 
-    - name: Commit clean-up changes
-      # Pin third party action (v4.16.0)
-      # uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_user_name: voc4cat gh-actions bot
-        commit_user_email: voc4cat-bot@example.org
-        # commit_author: Author <actions@github.com> # needed?
-        commit_message: 'CI: Remove Excel files from inbox-excel-vocabs'
-        push: true
+      - name: Remove Excel vocabulary files from inbox
+        run: |
+          git rm inbox-excel-vocabs/\*.xlsx || echo "No xlsx files to remove."
+          git status
+
+      - name: Commit clean-up changes
+        # Pin third party action (v4.16.0)
+        # uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_user_name: voc4cat gh-actions bot
+          commit_user_email: voc4cat-bot@example.org
+          # commit_author: Author <actions@github.com> # needed?
+          commit_message: 'CI: Remove Excel files from inbox-excel-vocabs'
+          push: true
 
 # Lit:
 # https://github.com/stefanzweifel/git-auto-commit-action
