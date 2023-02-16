@@ -4,8 +4,10 @@
 # Workflow steps:
 # - run voc4cat to update xlsx file and create turtle file
 # - store artifacts (even on failure)
-# - check approval
+# - commit changes under the name of the PR author
 # - remove xlsx-vocab file from PR and commit
+# - commit changes under the name "voc4cat-CI-bot"
+# - ? check approval ?
 
 name: CI on pull request create or update
 on:
@@ -84,8 +86,8 @@ jobs:
         # uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_user_name: voc4cat gh-actions bot
-          commit_user_email: voc4cat-bot@example.org
+          commit_user_name: voc4cat-CI-bot
+          commit_user_email: voc4cat-ci-bot@example.org
           # commit_author: Author <actions@github.com> # needed?
           commit_message: 'CI: Remove Excel files from inbox-excel-vocabs'
           push: true
