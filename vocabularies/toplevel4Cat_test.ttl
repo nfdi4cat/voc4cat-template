@@ -217,6 +217,7 @@
     dcterms:identifier "technology"^^xsd:token ;
     dcterms:provenance "AgroVoc"@en ;
     rdfs:isDefinedBy <http://aims.fao.org/aos/agrovoc/c_7644> ;
+    skos:altLabel "Technologie"@en ;
     skos:definition "This includes concepts for technological developments and inventions that are applied in modern agricultural and food systems, such as “biotechnology”, “food technology”, “information and communication technologies”, “seed technology” and “wood technology”."@en ;
     skos:inScheme cs: ;
     skos:prefLabel "Technology"@en ;
