@@ -72,11 +72,10 @@ jobs:
           push: true
           # glob pattern of files which should be added to the commit
           file_pattern: 'vocabularies/\*.ttl'
-        run: |
-          git status
 
       - name: Remove Excel vocabulary files from inbox
         run: |
+          git status
           git rm inbox-excel-vocabs/\*.xlsx || echo "No xlsx files to remove."
           git status
 
