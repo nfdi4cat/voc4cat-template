@@ -226,6 +226,7 @@
     dcterms:identifier "time"^^xsd:token ;
     dcterms:provenance "AgroVoc"@en ;
     rdfs:isDefinedBy <http://aims.fao.org/aos/agrovoc/c_7778> ;
+    skos:altLabel "Zeit"@en ;
     skos:definition "This contains concepts that describe timespans with a certain function, such as “free time”, “seasons”, “times of the day” and “working hours”. Timespans relevant to agricultural production are mostly aggregated in the “timing” concept."@en ;
     skos:inScheme cs: ;
     skos:prefLabel "Time"@en ;
