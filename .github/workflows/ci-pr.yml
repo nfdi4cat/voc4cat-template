@@ -4,10 +4,9 @@
 # Workflow steps:
 # - run voc4cat to update xlsx file and create turtle file
 # - store artifacts (even on failure)
-# - commit changes under the name of the PR author
+# - commit changed turtle-files under the name of the PR author
 # - remove xlsx-vocab file from PR and commit
 # - commit changes under the name "voc4cat-CI-bot"
-# - ? check approval ?
 
 name: CI on pull request create or update
 on:
@@ -18,7 +17,6 @@ on:
   workflow_dispatch:
 
 env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   FORCE_COLOR: "1"  # Make tools pretty.
   PIP_DISABLE_PIP_VERSION_CHECK: "1"
   PIP_PROGRESS_BAR: "off"
@@ -38,12 +36,6 @@ jobs:
         with:
           python-version: '3.11'
 
-      # - name: Install SSH Deploy Key
-      #   uses: shimataro/ssh-key-action@v2
-      #   with:
-      #     key: ${{ secrets.SSH_PRIVATE_KEY }} 
-      #     known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
-
       - name: Install dependencies
         run: |
           python -VV
@@ -57,8 +49,8 @@ jobs:
           voc4cat --add_IRI --check --forward --docs --output-directory outbox inbox-excel-vocabs/ |& tee voc4cat.log || EXIT_CODE=${PIPESTATUS[0]}
           mv voc4cat.log outbox
           ls -l outbox/ || echo "outbox directory does not exist."
-          echo "${EXIT_CODE}"
-          if [ $EXIT_CODE -ne 0 ]; then exit ${EXIT_CODE}; fi;
+        # echo "${EXIT_CODE}"
+        # if [ $EXIT_CODE -ne 0 ]; then exit ${EXIT_CODE}; fi;
 
       - name: Store artifacts
         if: ${{ always() }}
@@ -72,12 +64,12 @@ jobs:
           git status
           merge_vocab outbox/ vocabularies/
           git status
-        # git add vocabularies/\*.ttl || echo "No ttl files to add."
 
       - name: Commit vocabulary changes
-        uses: stefanzweifel/git-auto-commit-action@v4
+        # Pin third party action (v4.16.0)
+        uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a
         with:
-          commit_message: 'CI: vocabulary update in pipeline $CI_PIPELINE_ID'
+          commit_message: 'CI: vocabulary update in $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID'
           # glob pattern of files which should be added to the commit
           file_pattern: 'vocabularies/\*.ttl'
 
@@ -89,8 +81,7 @@ jobs:
 
       - name: Commit clean-up changes
         # Pin third party action (v4.16.0)
-        # uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a
         with:
           commit_user_name: voc4cat-CI-bot
           commit_user_email: voc4cat-ci-bot@example.org
