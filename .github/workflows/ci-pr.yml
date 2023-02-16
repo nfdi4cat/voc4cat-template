@@ -20,6 +20,7 @@ env:
   FORCE_COLOR: "1"  # Make tools pretty.
   PIP_DISABLE_PIP_VERSION_CHECK: "1"
   PIP_PROGRESS_BAR: "off"
+  RUN_URL: '$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID'
 
 jobs:
   build_vocab:
@@ -49,8 +50,6 @@ jobs:
           voc4cat --add_IRI --check --forward --docs --output-directory outbox inbox-excel-vocabs/ |& tee voc4cat.log || EXIT_CODE=${PIPESTATUS[0]}
           mv voc4cat.log outbox
           ls -l outbox/ || echo "outbox directory does not exist."
-        # echo "${EXIT_CODE}"
-        # if [ $EXIT_CODE -ne 0 ]; then exit ${EXIT_CODE}; fi;
 
       - name: Store artifacts
         if: ${{ always() }}
@@ -85,7 +84,7 @@ jobs:
           commit_user_name: voc4cat-CI-bot
           # commit_user_email: voc4cat-ci-bot@example.org
           # commit_author: Author <actions@github.com> # needed?
-          commit_message: 'CI: vocabulary update in $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID'
+          commit_message: 'CI: vocabulary update in ${{ RUN_URL }}'
           # commit_message: 'CI: Remove Excel files from inbox-excel-vocabs'
 
 # Lit:
