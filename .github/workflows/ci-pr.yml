@@ -4,9 +4,8 @@
 # Workflow steps:
 # - run voc4cat to update xlsx file and create turtle file
 # - store artifacts (even on failure)
-# - commit changed turtle-files under the name of the PR author
-# - remove xlsx-vocab file from PR and commit
-# - commit changes under the name "voc4cat-CI-bot"
+# - remove xlsx-vocab file from PR
+# - commit on behalf of the PR-author using "voc4cat-CI-bot" as committer
 
 name: CI on pull request create or update
 on:
@@ -17,7 +16,7 @@ on:
   workflow_dispatch:
 
 env:
-  FORCE_COLOR: "1"  # Make tools pretty.
+  FORCE_COLOR: "1"  # Make tool output pretty.
   PIP_DISABLE_PIP_VERSION_CHECK: "1"
   PIP_PROGRESS_BAR: "off"
   RUN_URL: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
@@ -55,7 +54,7 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
-          name: voc4cat-outbox-${{ GITHUB.RUN_ID }}
+          name: voc4cat-outbox-run${{ GITHUB.RUN_ID }}
           path: outbox/
 
       - name: Merge changes into vocabulary
@@ -63,7 +62,7 @@ jobs:
           merge_vocab outbox/ vocabularies/
           git status
 
-      - name: Commit vocabulary changes
+      - name: Add vocabulary changes
         # Pin third party action (v4.16.0)
         uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a
         with:
@@ -72,23 +71,15 @@ jobs:
 
       - name: Remove Excel vocabulary files from inbox
         run: |
-          echo 'envvar? ${{env.RUN_URL}}'
-          git status
           git rm inbox-excel-vocabs/\*.xlsx || echo "No xlsx files to remove."
           git status
-          echo 'RUN_URL=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID'
-
 
       - name: Commit vocabulary changes & xlsx removal
         # Pin third party action (v4.16.0)
         uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a
         with:
-          # glob pattern of files which should be added to the commit
           commit_user_name: voc4cat-CI-bot
-          # commit_user_email: voc4cat-ci-bot@example.org
-          # commit_author: Author <actions@github.com> # needed?
           commit_message: 'CI: vocabulary update in ${{ GITHUB.SERVER_URL }}/${{ GITHUB.REPOSITORY }}/actions/runs/${{ GITHUB.RUN_ID }}'
-          # commit_message: 'CI: Remove Excel files from inbox-excel-vocabs'
 
 # Lit:
 # https://github.com/stefanzweifel/git-auto-commit-action
