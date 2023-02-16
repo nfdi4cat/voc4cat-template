@@ -47,7 +47,7 @@ jobs:
         run: |
           python -VV
           python -m pip install --upgrade pip setuptools wheel
-          python -m pip install git+https://${{ SECRETS.GITHUB_READ_PAT }}@github.com/dalito/voc4cat-tool.git@main
+          python -m pip install git+https://${{ SECRETS.READ_PAT_VOC4CAT }}@github.com/dalito/voc4cat-tool.git@main
 
       - name: Run voc4cat
         run: |
