@@ -83,13 +83,13 @@ jobs:
         # Pin third party action (v4.16.0)
         uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a
         with:
-          commit_message: 'CI: vocabulary update in $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID'
           # glob pattern of files which should be added to the commit
           file_pattern: 'vocabularies/\*.ttl'
           commit_user_name: voc4cat-CI-bot
           # commit_user_email: voc4cat-ci-bot@example.org
           # commit_author: Author <actions@github.com> # needed?
-          commit_message: 'CI: Remove Excel files from inbox-excel-vocabs'
+          commit_message: 'CI: vocabulary update in $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID'
+          # commit_message: 'CI: Remove Excel files from inbox-excel-vocabs'
 
 # Lit:
 # https://github.com/stefanzweifel/git-auto-commit-action
