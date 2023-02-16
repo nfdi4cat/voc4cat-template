@@ -10,6 +10,7 @@
     dcterms:identifier "activities"^^xsd:token ;
     dcterms:provenance "AgroVoc"@en ;
     rdfs:isDefinedBy <http://aims.fao.org/aos/agrovoc/c_330834> ;
+    skos:altLabel "Aktivitäten"@en ;
     skos:definition "This contains activities that are conducted along the food supply chain, such as “breeding”, “feeding”, “surveying”, “cleaning” and “transport”. Included here are also higher-level management activities, such as “accounting” and “planning”; activities on nutritional topics, such as “weight reduction”; and activities that are more loosely related to agriculture and food or rural areas, such as “cartography”, “computer programming” and “recreation”."@en ;
     skos:inScheme cs: ;
     skos:prefLabel "Activities"@en ;
@@ -217,7 +218,6 @@
     dcterms:identifier "technology"^^xsd:token ;
     dcterms:provenance "AgroVoc"@en ;
     rdfs:isDefinedBy <http://aims.fao.org/aos/agrovoc/c_7644> ;
-    skos:altLabel "Technologie"@en ;
     skos:definition "This includes concepts for technological developments and inventions that are applied in modern agricultural and food systems, such as “biotechnology”, “food technology”, “information and communication technologies”, “seed technology” and “wood technology”."@en ;
     skos:inScheme cs: ;
     skos:prefLabel "Technology"@en ;
@@ -227,7 +227,6 @@
     dcterms:identifier "time"^^xsd:token ;
     dcterms:provenance "AgroVoc"@en ;
     rdfs:isDefinedBy <http://aims.fao.org/aos/agrovoc/c_7778> ;
-    skos:altLabel "Zeit"@en ;
     skos:definition "This contains concepts that describe timespans with a certain function, such as “free time”, “seasons”, “times of the day” and “working hours”. Timespans relevant to agricultural production are mostly aggregated in the “timing” concept."@en ;
     skos:inScheme cs: ;
     skos:prefLabel "Time"@en ;
