@@ -20,7 +20,7 @@ env:
   FORCE_COLOR: "1"  # Make tools pretty.
   PIP_DISABLE_PIP_VERSION_CHECK: "1"
   PIP_PROGRESS_BAR: "off"
-  RUN_URL: '$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID'
+  RUN_URL: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
 
 jobs:
   build_vocab:
@@ -72,9 +72,12 @@ jobs:
 
       - name: Remove Excel vocabulary files from inbox
         run: |
+          echo 'envvar? ${{env.RUN_URL}}'
           git status
           git rm inbox-excel-vocabs/\*.xlsx || echo "No xlsx files to remove."
           git status
+          echo 'RUN_URL=$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID'
+
 
       - name: Commit vocabulary changes & xlsx removal
         # Pin third party action (v4.16.0)
@@ -84,7 +87,7 @@ jobs:
           commit_user_name: voc4cat-CI-bot
           # commit_user_email: voc4cat-ci-bot@example.org
           # commit_author: Author <actions@github.com> # needed?
-          commit_message: 'CI: vocabulary update in ${{ env.RUN_URL }}'
+          commit_message: 'CI: vocabulary update in ${{ GITHUB.SERVER_URL }}/${{ GITHUB.REPOSITORY }}/actions/runs/${{ GITHUB_RUN_ID }}'
           # commit_message: 'CI: Remove Excel files from inbox-excel-vocabs'
 
 # Lit:
