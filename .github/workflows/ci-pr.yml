@@ -21,6 +21,7 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   FORCE_COLOR: "1"  # Make tools pretty.
   PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  PIP_PROGRESS_BAR: "OFF"
 
 jobs:
   build_vocab:
@@ -70,14 +71,13 @@ jobs:
         run: |
           git status
           merge_vocab outbox/ vocabularies/
+          git status
         # git add vocabularies/\*.ttl || echo "No ttl files to add."
-        # git status
 
       - name: Commit vocabulary changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'CI: vocabulary update in pipeline $CI_PIPELINE_ID'
-          push: true
           # glob pattern of files which should be added to the commit
           file_pattern: 'vocabularies/\*.ttl'
 
@@ -96,7 +96,6 @@ jobs:
           commit_user_email: voc4cat-ci-bot@example.org
           # commit_author: Author <actions@github.com> # needed?
           commit_message: 'CI: Remove Excel files from inbox-excel-vocabs'
-          push: true
 
 # Lit:
 # https://github.com/stefanzweifel/git-auto-commit-action
