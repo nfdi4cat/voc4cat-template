@@ -61,17 +61,15 @@ jobs:
 
       - name: Merge changes into vocabulary
         run: |
-          git status
           merge_vocab outbox/ vocabularies/
           git status
 
-      # - name: Commit vocabulary changes
-      #   # Pin third party action (v4.16.0)
-      #   uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a
-      #   with:
-      #     commit_message: 'CI: vocabulary update in $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID'
-      #     # glob pattern of files which should be added to the commit
-      #     file_pattern: 'vocabularies/\*.ttl'
+      - name: Commit vocabulary changes
+        # Pin third party action (v4.16.0)
+        uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a
+        with:
+          # glob pattern of files which should be added to the commit
+          file_pattern: 'vocabularies/\*.ttl'
 
       - name: Remove Excel vocabulary files from inbox
         run: |
@@ -84,7 +82,6 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a
         with:
           # glob pattern of files which should be added to the commit
-          file_pattern: 'vocabularies/\*.ttl'
           commit_user_name: voc4cat-CI-bot
           # commit_user_email: voc4cat-ci-bot@example.org
           # commit_author: Author <actions@github.com> # needed?
