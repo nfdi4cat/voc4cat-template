@@ -21,7 +21,7 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   FORCE_COLOR: "1"  # Make tools pretty.
   PIP_DISABLE_PIP_VERSION_CHECK: "1"
-  PIP_PROGRESS_BAR: "OFF"
+  PIP_PROGRESS_BAR: "off"
 
 jobs:
   build_vocab:
