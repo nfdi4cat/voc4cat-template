@@ -40,6 +40,7 @@ jobs:
         run: |
           python -VV
           python -m pip install --upgrade pip setuptools wheel
+        # TODO replace repo name with buildin variable
           python -m pip install git+https://anon:${{ SECRETS.READ_PAT_VOC4CAT }}@github.com/dalito/voc4cat-tool.git@main
 
       - name: Run voc4cat
