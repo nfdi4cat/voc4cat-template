@@ -46,9 +46,15 @@ jobs:
         run: |
           voc4cat --version
           ls -l outbox/ || echo "outbox directory does not exist."
-          voc4cat --add_IRI --check --forward --docs --output-directory outbox inbox-excel-vocabs/ |& tee voc4cat.log || EXIT_CODE=${PIPESTATUS[0]}
+          voc4cat --check --forward --docs --output-directory outbox inbox-excel-vocabs/ |& tee voc4cat.log
+          echo Jab status: "${{ job.status }}"
+          if [ ${PIPESTATUS[0]} == 1 ]; then
+            exit 1
+          fi
           mv voc4cat.log outbox
           ls -l outbox/ || echo "outbox directory does not exist."
+        env:
+          EXIT_CODE: 0
 
       - name: Store artifacts
         if: ${{ always() }}
