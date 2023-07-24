@@ -10,9 +10,9 @@ single_vocab = true
 # It should match the filename-stem of the vocabulary files.
 [vocabs.myvocab]
 # Length of integer IDs in vocabulary. IDs will be left-padded with zeros to specified length.
-id_length = 7
+id_length = 2
 # permanent part of IRIs defined in the vocabulary
-permanent_iri_part = "https://example.org/"
+permanent_iri_part = "https://example.org/c"
 
 # Section to configure checks (useful in CI pipeline)
 [vocabs.myvocab.checks]
