@@ -61,6 +61,9 @@ jobs:
           # from private repo: python -m pip install git+https://anon:${{ SECRETS.READ_PAT_VOC4CAT }}@github.com/dalito/voc4cat-tool.git@main
           python -m pip install git+https://github.com/nfdi4cat/voc4cat-tool.git@issue133
 
+      - name: Dynamically set RUN_DATE environment variable
+        run: echo "RUN_DATE=$(date +'%Y-%m-%dT%H%M')" >> $GITHUB_ENV
+
       - name: Run voc4cat
         run: |
           voc4cat --version
@@ -75,7 +78,7 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
-          name: voc4cat-outbox-run${{ GITHUB.RUN_ID }}
+          name: voc4cat-outbox_${{ env.RUN_DATE }}_run${{ GITHUB.RUN_ID }}
           path: outbox/
 
       - name: Add/stage vocabulary changes
