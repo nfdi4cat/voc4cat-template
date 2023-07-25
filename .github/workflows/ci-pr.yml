@@ -64,11 +64,11 @@ jobs:
       - name: Run voc4cat
         run: |
           voc4cat --version
-          voc4cat --check --forward --logfile voc4cat.log --docs pylode --output-directory outbox inbox-excel-vocabs/
+          voc4cat -v --ci-check --config _main_branch/idranges.toml --check --forward --logfile voc4cat.log --docs pylode --output-directory outbox inbox-excel-vocabs/
 
       - name: Merge changes into vocabulary (in PR branch)
         run: |
-          merge_vocab --logfile outbox/voc4cat.log outbox/ vocabularies/
+          merge_vocab --logfile voc4cat.log outbox/ vocabularies/
           git status
 
       - name: Store artifacts

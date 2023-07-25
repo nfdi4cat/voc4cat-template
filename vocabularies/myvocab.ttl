@@ -1,14 +1,14 @@
-@prefix cs: <https://example.org/test_> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://example.org/col1> a skos:Collection ;
-    dcterms:identifier "col1"^^xsd:token ;
-    dcterms:isPartOf cs: ;
-    dcterms:provenance "voc4cat-template"@en ;
+<https://example.org/c10> a skos:Collection ;
+    dcterms:identifier "c10"^^xsd:token ;
+    dcterms:isPartOf <https://example.org/test_> ;
+    dcterms:provenance "0000-0001-2345-6789 Added item"@en ;
     skos:definition "Collection of term related to linked data."@en ;
     skos:member <https://example.org/c01>,
         <https://example.org/c02>,
@@ -17,46 +17,49 @@
 
 <https://example.org/c02> a skos:Concept ;
     dcterms:identifier "c02"^^xsd:token ;
-    dcterms:provenance "https://www.w3.org/TR/2010/NOTE-curie-20101216/"@en ;
+    dcterms:provenance "0000-0001-2345-6789 Added item"@en ;
+    rdfs:isDefinedBy <https://www.w3.org/TR/2010/NOTE-curie-20101216/> ;
     skos:altLabel "CURIE"@en,
         "CompactURI"@en ;
     skos:broader <https://example.org/c01> ;
     skos:definition "A CURIE (or Compact URI) defines a generic, abbreviated syntax for expressing Uniform Resource Identifiers (URIs). "@en ;
-    skos:inScheme cs: ;
+    skos:inScheme <https://example.org/test_> ;
     skos:prefLabel "Compact Universal Resource Locator"@en .
 
 <https://example.org/c01> a skos:Concept ;
     dcterms:identifier "c01"^^xsd:token ;
-    dcterms:provenance "https://datatracker.ietf.org/doc/html/rfc2396"@en ;
+    dcterms:provenance "0000-0001-2345-6789 Added item"@en ;
+    rdfs:isDefinedBy <https://datatracker.ietf.org/doc/html/rfc2396> ;
     skos:altLabel "URI"@en ;
     skos:definition "Uniform Resource Identifier is a compact string of characters for identifying an abstract or physical resource."@en ;
-    skos:inScheme cs: ;
+    skos:inScheme <https://example.org/test_> ;
     skos:narrower <https://example.org/c02> ;
     skos:prefLabel "Uniform Resource Identifier"@en ;
     skos:relatedMatch <https://example.org/c03> ;
-    skos:topConceptOf cs: .
+    skos:topConceptOf <https://example.org/test_> .
 
 <https://example.org/c03> a skos:Concept ;
     dcterms:identifier "c03"^^xsd:token ;
-    dcterms:provenance "https://datatracker.ietf.org/doc/html/rfc3987"@en ;
+    dcterms:provenance "0000-0001-2345-6789 Added item"@en ;
+    rdfs:isDefinedBy <https://datatracker.ietf.org/doc/html/rfc3987> ;
     skos:altLabel "IRI"@en ;
     skos:definition "Internationalized Resource Identifier (IRI) is an internet protocol standard which builds on the Uniform Resource Identifier (URI) protocol by greatly expanding the set of permitted characters."@en ;
-    skos:inScheme cs: ;
+    skos:inScheme <https://example.org/test_> ;
     skos:prefLabel "Internationalized Resource Identifier"@en ;
-    skos:topConceptOf cs: .
+    skos:topConceptOf <https://example.org/test_> .
 
-cs: a skos:ConceptScheme ;
+<https://example.org/test_> a skos:ConceptScheme ;
     dcterms:created "2023-03-10"^^xsd:date ;
     dcterms:creator <http://example.org/nfdi4cat/> ;
-    dcterms:hasPart <https://example.org/col1> ;
+    dcterms:hasPart <https://example.org/c10> ;
     dcterms:identifier "test_"^^xsd:token ;
     dcterms:modified "2023-03-10"^^xsd:date ;
-    dcterms:provenance "Sofia Garcia (orcid:0000-0001-2345-6789)"@en ;
+    dcterms:provenance "0000-0001-2345-6789 (Sofia Garcia) First draft"@en ;
     dcterms:publisher <http://example.org/nfdi4cat/> ;
     owl:versionInfo "v2023-03-10" ;
     skos:definition "A test vocabulary for the voc4cat template"@en ;
     skos:hasTopConcept <https://example.org/c01>,
         <https://example.org/c03> ;
     skos:prefLabel "Test-of-Voc4Cat"@en ;
-    dcat:contactPoint "Sofia Garcia (orcid:0000-0001-2345-6789)" .
+    dcat:contactPoint "0000-0001-2345-6789 (Sofia Garcia)" .
 
