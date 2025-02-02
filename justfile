@@ -71,7 +71,7 @@ docs:
 # Rebuild the xlsx file from the joined ttl file.
 xlsx:
   @rm -f outbox/voc4cat.xlsx
-  @voc4cat convert --logfile outbox/voc4cat.log --template templates/voc4cat_template_043.xlsx outbox/
+  @voc4cat convert --config _main_branch/idranges.toml --logfile outbox/voc4cat.log --template templates/voc4cat_template_043.xlsx outbox/
 
 # Run all steps as in gh-actions: check xlsx, convert to SKOS, build docs, re-build xlsx
 all: check convert docs xlsx
